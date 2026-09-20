@@ -1,0 +1,9 @@
+[package]
+name = "gof_v2"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+gif = "0.14.2"
+macroquad = "0.4.16"
+rand = "0.10.2"
