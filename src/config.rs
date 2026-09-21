@@ -1,3 +1,5 @@
+pub const SIMULATION_TYPE: SimulationType = SimulationType::Life;
+
 use macroquad::color::*;
 
 pub const SCREEN_SIZE: (u32, u32) = (700, 700); // How big will be the simulation, pixels are cells (x,y)
@@ -30,7 +32,7 @@ pub const CYCLIC_PATTERN: CyclicPattern = CyclicPattern {
     neighbours: 4,
 };
 // Life Sim
-pub const SPAWN_TYPE: SpawnType = SpawnType::FullCircle; // Spawn in a circle (cooler) or randomly
+pub const SPAWN_TYPE: SpawnType = SpawnType::FullRandom; // Spawn in a circle (cooler) or randomly
 pub const SPAWN_RATE: u8 = 8; // If FullRandom, every cell will have 1/SPAWN_RATE chance to spawn
 pub const CELL_TYPE: CellType = CellType {
     b: &[1],
@@ -44,7 +46,7 @@ pub enum SpawnType {
     FullRandom,
     FullCircle,
 }
-pub const SIMULATION_TYPE: SimulationType = SimulationType::Life;
+
 #[derive(PartialEq)]
 pub enum SimulationType {
     Life,
