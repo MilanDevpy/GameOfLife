@@ -16,19 +16,19 @@ const SCREEN_LIMIT: u16 = 200;
 const DELAY: u8 = 20;
 const EXPORT_DIR: &str = "/home/cookie/Documents/Dev/Rust/Bordel Evolutif/gof_v2/Frames/frame";
 
-const SPAWN_TYPE: SpawnType = SpawnType::FullRandom;
-const SPAWN_RATE: u8 = 6;
+const SPAWN_TYPE: SpawnType = SpawnType::FullCircle;
+const SPAWN_RATE: u8 = 8;
 const CIRCLE_ROUND: u32 = 70;
 const CIRCLE_WEIGHT: u32 = 20;
 enum SpawnType {
     FullRandom,
     FullCircle,
 }
-//  Classic : b: 2,3 s: 3
+
 const CELL_TYPE: CellType = CellType {
-    b: &[2, 3, 4],
-    s: &[],
-    color: YELLOW,
+    b: &[3],
+    s: &[1, 2, 3, 4, 5],
+    color: BLUE,
 };
 
 #[derive(PartialEq, Copy, Clone)]
@@ -137,7 +137,9 @@ async fn main() {
     let mut population: Vec<CellState> = init_pop();
     request_new_screen_size(SCREEN_SIZE.0 as f32, SCREEN_SIZE.1 as f32);
     set_fullscreen(FULL_SCREEN);
-    let file = File::create("output.gif").unwrap();
+    let file: File;
+
+    file = File::create("output.gif").unwrap();
     let mut encoder = GifEncoder::new_with_speed(file, 10);
     encoder.set_repeat(Repeat::Infinite).unwrap();
 
