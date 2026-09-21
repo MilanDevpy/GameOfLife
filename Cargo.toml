@@ -1,9 +1,9 @@
 [package]
-name = "gof_v2"
+name = "GameOfLife"
 version = "0.1.0"
-edition = "2024"
+edition = "2026"
 
 [dependencies]
-gif = "0.14.2"
+image = "0.25.10"
 macroquad = "0.4.16"
 rand = "0.10.2"
