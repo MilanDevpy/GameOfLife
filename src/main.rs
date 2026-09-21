@@ -5,21 +5,21 @@ use image::{
 };
 use macroquad::{input::KeyCode::Space, prelude::*};
 use std::fs::File;
-const SCREEN_SIZE: (u32, u32) = (700, 700); //(x,y)
-const BG_COLOR: Color = BLACK;
-const FULL_SCREEN: bool = false;
-const WAIT_FOR_SIGNAL: bool = true;
+const SCREEN_SIZE: (u32, u32) = (700, 700); // How big will be the simulation, pixels are cells (x,y)
+const BG_COLOR: Color = BLACK; // Background Color
+const FULL_SCREEN: bool = false; // Is full screen (tbh it's usefull only if you put the screensize to your screen size)
+const WAIT_FOR_SIGNAL: bool = true; // If true, the simulation will wait you to press the space button
 
-const EXPORTING: bool = false;
-const EXPORTING_RATE: u16 = 5;
-const SCREEN_LIMIT: u16 = 200;
-const DELAY: u8 = 20;
-const EXPORT_DIR: &str = "/home/cookie/Documents/Dev/Rust/Bordel Evolutif/gof_v2/Frames/frame";
+const EXPORTING: bool = false; // Do you want to export the sim to a gif
+const EXPORTING_RATE: u16 = 5; // will export a frame every EXPORTING_RATE generations
+const SCREEN_LIMIT: u16 = 200; // Maximul number of frames the gif will contain
+const DELAY: u8 = 20; // Time between each frame
+const EXPORT_DIR: &str = "/home/cookie/Documents/Dev/Rust/Bordel Evolutif/gof_v2/Frames/frame"; // Put a trash dir
 
-const SPAWN_TYPE: SpawnType = SpawnType::FullCircle;
-const SPAWN_RATE: u8 = 8;
-const CIRCLE_ROUND: u32 = 70;
-const CIRCLE_WEIGHT: u32 = 20;
+const SPAWN_TYPE: SpawnType = SpawnType::FullCircle; // Spawn in a circle (cooler) or randomly
+const SPAWN_RATE: u8 = 8; // If FullRandom, every cell will have 1/SPAWN_RATE chance to spawn
+const CIRCLE_ROUND: u32 = 70; // If FullCircle, the exterior circle
+const CIRCLE_WEIGHT: u32 = 20; // If Fullcircle, the interior circle (will fill with Alive cells between CIRCLE_ROUND & CIRCLE_WEIGHT)
 enum SpawnType {
     FullRandom,
     FullCircle,
@@ -27,8 +27,8 @@ enum SpawnType {
 
 const CELL_TYPE: CellType = CellType {
     b: &[3],
-    s: &[1, 2, 3, 4, 5],
-    color: BLUE,
+    s: &[2, 3],
+    color: WHITE,
 };
 
 #[derive(PartialEq, Copy, Clone)]
