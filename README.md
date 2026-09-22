@@ -1,6 +1,6 @@
-# GameOfLife
-*tbh I used AI to correct my bad spelling in the README, but it's not AI Slop*
+# Yo, so I still need to finish the ReadME but tbh you can just play with parameters in src/config.rs ;)
 
+## GameOfLife
 You can modify the consts to change the parameters. Here are some variants of Conway's GOF:
 
 **Conway GOF:**
