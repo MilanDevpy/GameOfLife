@@ -1,4 +1,3 @@
-use macroquad::color::BLACK;
 use macroquad::color::Color;
 use rand::random_range;
 
@@ -36,26 +35,21 @@ pub fn init_pop() -> Vec<u8> {
 
 pub fn scan_cell(cell_pos: (u32, u32), popu: &[u8]) -> u8 {
     let mut score: u8 = 0;
-    for y in CYCLIC_PATTERN.search_distance as i32 * CYCLIC_PATTERN.search_distance as i32 * -1
-        ..=CYCLIC_PATTERN.search_distance as i32
-    {
+    let next = (popu[ptinx(cell_pos.0, cell_pos.1) as usize] + 1) % CYCLIC_PATTERN.states;
+    for y in CYCLIC_PATTERN.search_distance as i32 * -1..=CYCLIC_PATTERN.search_distance as i32 {
         for x in CYCLIC_PATTERN.search_distance as i32 * -1
             ..=CYCLIC_PATTERN.search_distance as i32 as i32
         {
-            if cell_pos.0 as i32 + x < 0
-                || cell_pos.0 as i32 + x >= SCREEN_SIZE.0 as i32
-                || cell_pos.1 as i32 + y >= SCREEN_SIZE.1 as i32
-                || cell_pos.1 as i32 + y < 0
-                || (x == 0 && y == 0)
-            {
+            if x == 0 && y == 0 {
                 continue;
             }
+
             let target_inx = ptinx(
-                (cell_pos.0 as i32 + x) as u32,
-                (cell_pos.1 as i32 + y) as u32,
+                (cell_pos.0 as i32 + x).rem_euclid(SCREEN_SIZE.0 as i32) as u32,
+                (cell_pos.1 as i32 + y).rem_euclid(SCREEN_SIZE.1 as i32) as u32,
             );
 
-            if popu[target_inx as usize] == popu[ptinx(cell_pos.0, cell_pos.1) as usize] + 1 {
+            if popu[target_inx as usize] == next {
                 score += 1;
             }
         }
@@ -64,65 +58,83 @@ pub fn scan_cell(cell_pos: (u32, u32), popu: &[u8]) -> u8 {
     let cell_who = popu[ptinx(cell_pos.0, cell_pos.1) as usize];
 
     if score >= CYCLIC_PATTERN.neighbours {
-        if cell_who > CYCLIC_PATTERN.states - 1 {
-            return 0;
-        }
-        return cell_who + 1;
+        next
     } else {
         return cell_who;
     }
 }
 
 pub fn state_to_color(st: u8) -> Color {
-    println!("{st}");
-    return Color {
-        r: (st * 40) as f32,
-        g: (st * 40) as f32,
-        b: (st * 40) as f32,
-        a: 1.,
-    };
+    match CYCLIC_PATTERN.color_scheme {
+        CyclicColors::BlueToPurple => match st {
+            0 => Color {
+                r: 6. / 255.,
+                g: 0. / 255.,
+                b: 50. / 255.,
+                a: 1.,
+            },
+            1 => Color {
+                r: 30. / 255.,
+                g: 9. / 255.,
+                b: 115. / 255.,
+                a: 1.,
+            },
+            2 => Color {
+                r: 0.,
+                g: 0.,
+                b: 0.,
+                a: 1.,
+            },
+            3 => Color {
+                r: 10. / 255.,
+                g: 26. / 255.,
+                b: 94. / 255.,
+                a: 1.,
+            },
+            4 => Color {
+                r: 148. / 255.,
+                g: 20. / 255.,
+                b: 239. / 255.,
+                a: 1.,
+            },
+            5 => Color {
+                r: 172. / 255.,
+                g: 20. / 255.,
+                b: 239. / 255.,
+                a: 1.,
+            },
+            6 => Color {
+                r: 219. / 255.,
+                g: 72. / 255.,
+                b: 242. / 255.,
+                a: 1.,
+            },
+            7 => Color {
+                r: 214. / 255.,
+                g: 58. / 255.,
+                b: 192. / 255.,
+                a: 1.,
+            },
+            8 => Color {
+                r: 230. / 255.,
+                g: 52. / 255.,
+                b: 185. / 255.,
+                a: 1.,
+            },
+            _ => Color {
+                r: 0.,
+                g: 0.,
+                b: 0.,
+                a: 1.,
+            },
+        },
+        CyclicColors::GrayScale => {
+            return Color {
+                r: (st * 100 % 255) as f32,
+                g: (st * 100 % 255) as f32,
+                b: (st * 100 % 255) as f32,
+                a: 1.,
+            };
+        }
+    }
 }
-// pub fn state_to_color(st: u8) -> Color {
-//     match st {
-//         0 => Color {
-//             r: 255.0,
-//             g: 255.0,
-//             b: 255.0,
-//             a: 0.,
-//         },
-//         1 => Color {
-//             r: 147.,
-//             g: 228.,
-//             b: 228.,
-//             a: 1.,
-//         },
-//         2 => Color {
-//             r: 85.,
-//             g: 226.,
-//             b: 168.,
-//             a: 1.,
-//         },
-//         3 => Color {
-//             r: 57.,
-//             g: 236.,
-//             b: 82.,
-//             a: 1.,
-//         },
-//         4 => Color {
-//             r: 193.,
-//             g: 255.,
-//             b: 41.,
-//             a: 1.,
-//         },
-//         5 => Color {
-//             r: 218.,
-//             g: 203.,
-//             b: 12.,
-//             a: 1.,
-//         },
-//         _ => {
-//             assert!(true);
-//             BLACK
-//         }
-//     }
-// }
