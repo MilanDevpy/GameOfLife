@@ -43,6 +43,11 @@ pub fn scan_cell(cell_pos: (u32, u32), popu: &[u8]) -> u8 {
             if x == 0 && y == 0 {
                 continue;
             }
+            if CYCLIC_PATTERN.pattern == SearchPattern::Cross {
+                if (x != 0) && (y != 0) {
+                    continue;
+                }
+            }
 
             let target_inx = ptinx(
                 (cell_pos.0 as i32 + x).rem_euclid(SCREEN_SIZE.0 as i32) as u32,
@@ -130,11 +135,73 @@ pub fn state_to_color(st: u8) -> Color {
         },
         CyclicColors::GrayScale => {
             return Color {
-                r: (st * 100 % 255) as f32,
-                g: (st * 100 % 255) as f32,
-                b: (st * 100 % 255) as f32,
+                r: (st * 100 / 255) as f32,
+                g: (st * 100 / 255) as f32,
+                b: (st * 100 / 255) as f32,
                 a: 1.,
             };
         }
+        CyclicColors::OrangeAndRed => match st {
+            0 => Color {
+                r: 77. / 255.,
+                g: 78. / 255.,
+                b: 22. / 255.,
+                a: 1.,
+            },
+            1 => Color {
+                r: 224. / 255.,
+                g: 227. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            2 => Color {
+                r: 227.,
+                g: 190.,
+                b: 33.,
+                a: 1.,
+            },
+            3 => Color {
+                r: 227. / 255.,
+                g: 173. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            4 => Color {
+                r: 227. / 255.,
+                g: 161. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            5 => Color {
+                r: 227. / 255.,
+                g: 119. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            6 => Color {
+                r: 227. / 255.,
+                g: 80. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            7 => Color {
+                r: 227. / 255.,
+                g: 33. / 255.,
+                b: 33. / 255.,
+                a: 1.,
+            },
+            8 => Color {
+                r: 68. / 255.,
+                g: 13. / 255.,
+                b: 13. / 255.,
+                a: 1.,
+            },
+            _ => Color {
+                r: 0.,
+                g: 0.,
+                b: 0.,
+                a: 1.,
+            },
+        },
     }
 }

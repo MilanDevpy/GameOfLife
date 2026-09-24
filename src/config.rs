@@ -9,10 +9,10 @@ pub const CELL_TYPE: CellType = CellType {
 
 pub const CYCLIC_PATTERN: CyclicPattern = CyclicPattern {
     pattern: SearchPattern::Classic,
-    search_distance: 1,
+    search_distance: 2,
     states: 8,
-    neighbours: 2,
-    color_scheme: CyclicColors::BlueToPurple,
+    neighbours: 4,
+    color_scheme: CyclicColors::OrangeAndRed,
 };
 use macroquad::color::*;
 
@@ -23,13 +23,13 @@ pub const WAIT_FOR_SIGNAL: bool = true; // If true, the simulation will wait you
 
 pub const EXPORTING: bool = true; // Do you want to export the sim to a gif
 pub const EXPORTING_RATE: u16 = 3; // will export a frame every EXPORTING_RATE generations
-pub const SCREEN_LIMIT: u16 = 600; // Maximul number of frames the gif will contain
+pub const SCREEN_LIMIT: u16 = 2000; // Maximul number of frames the gif will contain
 pub const DELAY: u8 = 20; // Time between each frame
 pub const EXPORT_DIR: &str =
     "/home/cookie/Documents/Dev/Rust/Bordel Evolutif/GameOfLIfe/Frames/frame"; // Put a trash dir
 
 // Cyclic Cellular Automata Sim
-
+#[derive(PartialEq)]
 pub enum SearchPattern {
     Cross,
     Classic,
@@ -37,6 +37,7 @@ pub enum SearchPattern {
 pub enum CyclicColors {
     BlueToPurple,
     GrayScale,
+    OrangeAndRed,
 }
 pub struct CyclicPattern {
     pub pattern: SearchPattern,
